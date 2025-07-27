@@ -11,7 +11,7 @@ export default function AddItem({onAddTaskToList}) {
     return(
         <div style={{display: "flex", alignItems: "center", gap: "0.5em", padding: "0 1em"}}>
             <input type="text" style={{height: "80%"}} value={task} onChange={(e)=> setTask(e.target.value)}/>
-            <button onClick={handleClick}>Add Task</button>
+            <button onClick={handleClick} disabled={task === ""}>Add Task</button>
         </div>
     );
 };
