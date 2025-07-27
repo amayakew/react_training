@@ -1,23 +1,47 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddItem from "./AddItem";
 import ToDoList from "./ToDoList";
 
-export default function ToDoListContainer(){
+const TODO_LIST_LOCAL_STORAGE_KEY = "todoList";
 
-    const [tasksList, setTaskList] = useState([]);
+export default function ToDoListContainer() {
+  const [tasksList, setTaskList] = useState([]);
 
-    const handleAddTask = (task) => {
-        setTaskList((currentList) => [...currentList, task]);
-    };
-
-    const handleToggle = (index) => {
-        setTaskList(tasksList.map((task, i) => i === index ? {...task, isDone: !task.isDone} : task));
-    };
-
-    return(
-        <main>
-            <AddItem onAddTaskToList={(task)=>handleAddTask(task)}/>
-            <ToDoList tasks={tasksList} onToggle={(index) => handleToggle(index)}/>
-        </main>
+  useEffect(() => {
+    const dataFromLocalStorage = localStorage.getItem(
+      TODO_LIST_LOCAL_STORAGE_KEY
     );
-};
+
+    if (dataFromLocalStorage) {
+      setTaskList(JSON.parse(dataFromLocalStorage));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (tasksList.length === 0) return;
+
+    localStorage.setItem(
+      TODO_LIST_LOCAL_STORAGE_KEY,
+      JSON.stringify(tasksList)
+    );
+  }, [tasksList]);
+
+  const handleAddTask = (task) => {
+    setTaskList((currentList) => [...currentList, task]);
+  };
+
+  const handleToggle = (index) => {
+    setTaskList(
+      tasksList.map((task, i) =>
+        i === index ? { ...task, isDone: !task.isDone } : task
+      )
+    );
+  };
+
+  return (
+    <main>
+      <AddItem onAddTaskToList={(task) => handleAddTask(task)} />
+      <ToDoList tasks={tasksList} onToggle={(index) => handleToggle(index)} />
+    </main>
+  );
+}

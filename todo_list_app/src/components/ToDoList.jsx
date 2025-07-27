@@ -1,7 +1,6 @@
 import ToDoItem from "./ToDoItem";
 
 export default function ToDoList({tasks, onToggle}) {
-    console.log(tasks)
     return(
         <>
             <h1>ToDo List</h1>
