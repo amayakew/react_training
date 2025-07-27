@@ -1,8 +1,8 @@
-export default function ToDoItem({taskName}) {
+export default function ToDoItem({task, onToggle}) {
     return(
         <label>
-            <input type="checkbox"/>
-            {taskName}
+            <input type="checkbox" checked={task.isDone} onChange={onToggle}/>
+            {task.label}
         </label>
     );
 };
