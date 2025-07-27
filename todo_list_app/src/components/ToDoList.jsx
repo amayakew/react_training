@@ -1,11 +1,13 @@
 import ToDoItem from "./ToDoItem";
 
-export default function ToDoList() {
+export default function ToDoList({tasks}) {
     return(
         <>
             <h1>ToDo List</h1>
-            <p>You have <span>number</span> tasks:</p>
-            <ul><ToDoItem/></ul>
+            <p>You have <span style={{fontWeight: "bold"}}>{tasks.length}</span> tasks:</p>
+            <ul>
+                {tasks.map(task => <li key={task}><ToDoItem taskName={task}/></li>)}
+            </ul>
         </>
     );
 };

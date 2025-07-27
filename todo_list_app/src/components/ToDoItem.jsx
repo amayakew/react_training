@@ -1,8 +1,8 @@
-export default function ToDoItem() {
+export default function ToDoItem({taskName}) {
     return(
         <label>
             <input type="checkbox"/>
-            Task
+            {taskName}
         </label>
     );
 };
